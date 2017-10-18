@@ -3,8 +3,9 @@
 
 #include <list>
 
-#define BAR_SPACING 18
+#define BAR_SPACING 8
 #define GAME_HEIGHT 63
+#define GAME_WIDTH 42
 #define Y_SPA 10.
 #define FREQ 10
 #define DECR_POWER 0.9
@@ -20,6 +21,7 @@ class Game {
         int passedBars = 0;
 
         void nextBar();
+        double getNcenter(int n);
 
     public:
         // @return true if the player has lost

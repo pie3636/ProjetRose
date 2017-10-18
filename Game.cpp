@@ -8,7 +8,7 @@
             if(passedBars% FREQ ==0) yspaceing = yspaceing*DECR_POWER;
             centerY.pop_front();
 
- 		double newH = rand() % 63 -2*int(yspaceing);
+ 		double newH = rand() % (63 - int(yspaceing)) + int(yspaceing);
 
             centerY.push_back(newH);
         }
@@ -31,6 +31,33 @@
 
 	void Game::display(){
 
+		for(int y = 0; y < GAME_HEIGHT ; ++y){
+
+			for(int x = 0; x < GAME_WIDTH; ++x){
+				if(x ==0 && y == int(currentY)){
+					std::cout<<"O";
+					x++;
+				}
+
+				if(x%BAR_SPACING == nextBarX){
+					if(y < getNcenter(x/BAR_SPACING) - yspaceing || y > getNcenter(x/BAR_SPACING) + yspaceing ){
+						std::cout<<"X";
+					}
+					else{
+						std::cout<<" ";
+					}
+				}
+
+				else{
+					std::cout<<" ";
+				}
+				if(x == GAME_WIDTH-1){
+					std::cout<<std::endl;
+				}
+			}
+		}
+std::cout<<std::endl;std::cout<<std::endl;
+
 	    std::cout << "nextBarX : " << nextBarX<< std::endl;
 	    std::cout << "speed : " << speed<< std::endl;
 	    std::cout << "yspaceing : " << yspaceing<< std::endl;
@@ -48,11 +75,19 @@
 	std::list<double> Game::getData() {
 		std::list<double>::iterator it = centerY.begin();
     		
-		std::list<double> input = {currentY, speed, double(nextBarX), centerY.front()};//, it++};
+		std::list<double> input = {currentY, speed, double(nextBarX), centerY.front(), *(it++)};
             // Y courant
             // speed courante
             // nextBarX
             // nextYcenter
             // nextNextYcenter
             return input;
+        }
+
+        double Game::getNcenter(int n){
+        		    std::list<double>::iterator it = centerY.begin();
+
+        		    for(int j = 0 ;j<n;++it, j++){}
+
+        		    	return *it;
         }
