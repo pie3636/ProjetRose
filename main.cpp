@@ -32,5 +32,17 @@ bool pressed = rand()%2 == 0;
 
     n.display();
 
+
+    std::cout<<"Test the NN computation and output"<<std::endl;
+
+    std::vector<double> output  = n.compute_output_values();
+    for(int i = 0 ; i < output.size(); ++i){
+        std::cout<<" "<<output[i];
+    }
+    std::cout<<std::endl;
+        std::cout<<" the NN computation and output is OK"<<std::endl;
+
+    n.display();
+
     return 0;
 }
