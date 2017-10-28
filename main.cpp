@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Game.h"
+#include "Neural.h"
 // a = .32
 // h = 124/(n+2) (h_m = 63)
 
@@ -17,7 +18,12 @@ bool pressed = rand()%2 == 0;
     	g.display();
     }
 
+    std::vector<double> input_d = g.getData();
 
+    std::cout<<"Test the NN constructor"<<std::endl;
+    Neural n(10);
+    n.set_input(input_d);
+    n.display();
 
     return 0;
 }

@@ -72,10 +72,10 @@ std::cout<<std::endl;std::cout<<std::endl;
 
 	}
 
-	std::list<double> Game::getData() {
+	std::vector<double> Game::getData() {
 		std::list<double>::iterator it = centerY.begin();
     		
-		std::list<double> input = {currentY, speed, double(nextBarX), centerY.front(), *(it++)};
+		std::vector<double> input = {currentY, speed, double(nextBarX), centerY.front(), *(it++)};
             // Y courant
             // speed courante
             // nextBarX

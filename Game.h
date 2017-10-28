@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include <list>
+#include <vector>
 
 #define BAR_SPACING 8
 #define GAME_HEIGHT 63
@@ -30,7 +31,7 @@ class Game {
         void display();
 
         // @return The input data for the neural network
-        std::list<double> getData() ;
+        std::vector<double> getData() ;
 };
 
 
