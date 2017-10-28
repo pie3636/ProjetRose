@@ -21,8 +21,15 @@ bool pressed = rand()%2 == 0;
     std::vector<double> input_d = g.getData();
 
     std::cout<<"Test the NN constructor"<<std::endl;
-    Neural n(10);
-    n.set_input(input_d);
+    std::vector<int> NNstruct({6,3,1});
+    Neural n(NNstruct);
+        std::cout<<"Thes constructor is ok"<<std::endl;
+    std::cout<<"Test the NN set_input"<<std::endl;
+
+    n.set_input(input_d); 
+           std::cout<<"The set_input is ok"<<std::endl;
+
+
     n.display();
 
     return 0;
