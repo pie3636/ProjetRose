@@ -1,6 +1,8 @@
 #include <iostream>
 #include "Game.h"
 #include "Neural.h"
+#include "Simul.h"
+
 // a = .32
 // h = 124/(n+2) (h_m = 63)
 
@@ -8,6 +10,7 @@ int main() {
 	std::cout << "Hello, World!" << std::endl;
 	srand(time(NULL));
     Game g;
+    g.display();
     bool stillPlaying = true;
         g.getData();
 
@@ -43,6 +46,11 @@ bool pressed = rand()%2 == 0;
         std::cout<<" the NN computation and output is OK"<<std::endl;
 
     n.display();
+
+    std::cout<<"Test a simulation :"<<std::endl;
+    Simul s = Simul(n);
+    int score = s.play();
+    std::cout<<"Score gotten = "<<score<<std::endl;
 
     return 0;
 }

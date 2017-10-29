@@ -91,3 +91,11 @@ std::cout<<std::endl;std::cout<<std::endl;
 
         		    	return *it;
         }
+
+        int Game::getScore(){
+        	return passedBars;
+        }
+
+        void Game::reset(){
+        	*this =  Game();
+        }
