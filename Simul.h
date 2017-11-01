@@ -10,7 +10,7 @@ private:
 	Game g;
 	Neural nn;
 	bool ask_if_press();
-	Simul(std::vector<int> vect_scheme);
+	Simul(const std::vector<int>& vect_scheme);
 
 public:
 	/**
@@ -18,6 +18,9 @@ public:
 	*@return score de la partie simulée
 	*/
 	int play();
+	void mutate();
+	Neural breed(const Simul& s);
+	int getAverageScore(int num);
 	Simul(const Neural& nn_);
 	Simul();
 };

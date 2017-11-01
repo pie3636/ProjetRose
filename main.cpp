@@ -54,6 +54,6 @@ bool pressed = rand()%2 == 0;
 
     std::cout<<"Start testing the IA"<<std::endl;
     IA ia = IA(10,{6,3,1});
-
+    ia.evolve(7);
     return 0;
 }

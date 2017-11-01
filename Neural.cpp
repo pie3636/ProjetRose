@@ -16,7 +16,7 @@ Neural::Neural(const std::vector<int>& NN_structure){
 	weight_values = std::vector<std::vector<std::vector<double>>>(NN_structure.size());
 	std::vector<std::vector<double>> inputLayer(NN_structure[0]);
 	for(int i = 0 ; i < NN_structure[0]; i++){
-		inputLayer[i] = std::vector<double>(1);
+		inputLayer[i] = std::vector<double>(0);
 	}
 	weight_values[0] = inputLayer;
 
@@ -91,4 +91,33 @@ Neural::Neural(){
 	std::cout<<"Neural default constructor called"<<std::endl;
 	internal_nodes_values = std::vector<std::vector<double>>(0);
 	weight_values = std::vector<std::vector<std::vector<double>>>(0);
+}
+
+void Neural::mutate(){
+
+	for(int i= 1; i< weight_values.size(); ++i){
+		for(int j = 0 ; j < weight_values[i].size(); ++j){
+			for(int k = 0 ; k < weight_values[i-1].size(); k++){
+				if(double (rand())/(double (RAND_MAX)) < MUT_PROB){
+					weight_values[i][j][k] = (double (rand())/(double (RAND_MAX))-0.5)*2*RANGE_MAX;
+				}
+			}
+		}
+	}
+}
+
+Neural Neural::breed(const Neural & n){
+	Neural new_neural = Neural(*this);
+	for(int i= 1; i< weight_values.size(); ++i){
+		for(int j = 0 ; j < weight_values[i].size(); ++j){
+			for(int k = 0 ; k < weight_values[i-1].size(); k++){
+				if(double (rand())/(double (RAND_MAX)) < BREEDING_PROB){
+					std::cout<<"Entering here";
+					new_neural.weight_values[i][j][k] = n.weight_values[i][j][k];
+					std::cout<<"OUT here"<<std::endl;
+				}
+			}
+		}
+	}
+	return new_neural;
 }

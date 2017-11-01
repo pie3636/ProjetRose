@@ -4,6 +4,9 @@
 #include <list>
 #include <vector>
 
+#define MUT_PROB 0.01
+#define RANGE_MAX  30.0
+#define BREEDING_PROB  30.0
 
 class Neural{
 private:
@@ -13,6 +16,7 @@ private:
 	std::vector<double> input_values;
 	std::vector<double> output_values;
 
+	double mutation_probability_ = MUT_PROB;
 	double logical_reg(const std::vector<double> & coefs, const std::vector<double> & inputs);
 
 public:
@@ -21,7 +25,8 @@ public:
 	void set_input(const std::vector<double> &input_values_arg);
 	void display();
 	Neural();
-
+	void mutate();
+	Neural breed(const Neural& n);
 
 	std::vector<double> compute_output_values();
 };

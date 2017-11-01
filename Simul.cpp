@@ -8,12 +8,21 @@ int Simul::play(){
 	
 
 	while(stillPlaying){
-		g.display();
+		//g.display();
 		bool pressed = ask_if_press();
 		stillPlaying = !g.step(pressed);
 	}
 
 	return g.getScore();
+}    
+
+int Simul::getAverageScore(int num){
+
+	int total = 0;
+	for( int i = 0 ; i < num ; i++){
+		g.reset();
+		total += play();
+	}
 }    
 
 bool Simul::ask_if_press(){
@@ -26,8 +35,15 @@ Simul::Simul(const Neural& n): nn(n){
 	std::cout<<"Simul with neural constructor called"<<std::endl;
 }
 
-Simul::Simul(std::vector<int> v): nn(Neural(v)){
+Simul::Simul(const std::vector<int> & v): nn(Neural(v)){
 }
 
 Simul::Simul(): nn(Neural()){
+}
+
+void Simul::mutate(){
+	nn.mutate();
+}
+Neural Simul::breed(const Simul& s){
+	nn.breed(s.nn);
 }
