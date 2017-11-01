@@ -45,5 +45,5 @@ void Simul::mutate(){
 	nn.mutate();
 }
 Neural Simul::breed(const Simul& s){
-	nn.breed(s.nn);
+	return nn.breed(s.nn);
 }
