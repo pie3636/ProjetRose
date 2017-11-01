@@ -2,7 +2,7 @@
 #include "Game.h"
 #include "Neural.h"
 #include "Simul.h"
-
+#include "IA.h"
 // a = .32
 // h = 124/(n+2) (h_m = 63)
 
@@ -51,6 +51,9 @@ bool pressed = rand()%2 == 0;
     Simul s = Simul(n);
     int score = s.play();
     std::cout<<"Score gotten = "<<score<<std::endl;
+
+    std::cout<<"Start testing the IA"<<std::endl;
+    IA ia = IA(10,{6,3,1});
 
     return 0;
 }
