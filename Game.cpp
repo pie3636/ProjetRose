@@ -1,6 +1,9 @@
 #include "Game.h"
 #include <cstdlib>
 #include <iostream>
+#include <cmath>
+
+#define GRAVITY .32
 
 Game::Game() {
     std::cout << "[Game] Default ctor" << std::endl;
@@ -29,7 +32,7 @@ void Game::nextBar() {
 
 bool Game::step(bool isPressed) {
     nextBarX--;
-    speed += isPressed ? .32 : -.32;
+    speed += isPressed ? GRAVITY : -GRAVITY;
     currentY += speed;
     if (currentY < 0 || currentY > GAME_HEIGHT) {
         return true;
@@ -83,8 +86,9 @@ void Game::display() {
 
 std::vector <double> Game::getData() {
     auto it = centerY.begin();
-
-    std::vector <double> input = {currentY, speed, double(nextBarX), centerY.front(), *(it++)};
+    constexpr double MAX_SPEED = (sqrt(8*GAME_HEIGHT/GRAVITY + 1) - 1)/2;
+    std::vector <double> input = {currentY/GAME_HEIGHT, speed/MAX_SPEED + .5,
+                                  (double) nextBarX/BAR_SPACING, centerY.front()/GAME_HEIGHT, *(it++)/GAME_HEIGHT};
     // Y courant
     // speed courante
     // nextBarX
