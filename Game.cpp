@@ -1,101 +1,107 @@
 #include "Game.h"
-#include <stdlib.h>
+#include <cstdlib>
 #include <iostream>
 
-        void Game::nextBar() {
-            nextBarX = BAR_SPACING;
-            passedBars++;
-            if(passedBars% FREQ ==0) yspaceing = yspaceing*DECR_POWER;
-            centerY.pop_front();
+Game::Game() {
+    std::cout << "[Game] Default ctor" << std::endl;
+}
 
- 		double newH = rand() % (63 - int(yspaceing)) + int(yspaceing);
+Game::Game(const Game &other) {
+    std::cout << "[Game] Copy ctor" << std::endl;
+}
 
-            centerY.push_back(newH);
+Game& Game::operator=(Game rhs) {
+    std::cout << "[Game] Assignment operator" << std::endl;
+    std::swap(*this, rhs);
+    return *this;
+}
+
+void Game::nextBar() {
+    nextBarX = BAR_SPACING;
+    passedBars++;
+    if (passedBars % FREQ == 0) ySpacing = ySpacing * DECR_POWER;
+    centerY.pop_front();
+
+    double newH = rand() % (63 - int(ySpacing)) + int(ySpacing);
+
+    centerY.push_back(newH);
+}
+
+bool Game::step(bool isPressed) {
+    nextBarX--;
+    speed += isPressed ? .32 : -.32;
+    currentY += speed;
+    if (currentY < 0 || currentY > GAME_HEIGHT) {
+        return true;
+    }
+    if (nextBarX == 0) {
+        if (currentY < centerY.front() - ySpacing || currentY > centerY.front() + ySpacing) {
+            return true;
         }
+        nextBar();
+    }
+    return false;
+}
 
-        bool Game::step(bool isPressed) {
-            nextBarX--;
-            speed += isPressed ? .32 : -.32;
-            currentY += speed;
-            if (currentY < 0 || currentY > GAME_HEIGHT) {
-                return true;
+void Game::display() {
+    for (int y = 0; y < GAME_HEIGHT; ++y) {
+        for (int x = 0; x < GAME_WIDTH; ++x) {
+            if (x == 0 && y == int(currentY)) {
+                std::cout << "O";
+                x++;
             }
-            if (nextBarX == 0) {
-            	if (currentY < centerY.front() -  yspaceing|| currentY > centerY.front() + yspaceing) {
-                	return true;
-            	}
-                nextBar();
+            if (x % BAR_SPACING == nextBarX) {
+                if (y < getNcenter(x / BAR_SPACING) - ySpacing || y > getNcenter(x / BAR_SPACING) + ySpacing) {
+                    std::cout << "X";
+                } else {
+                    std::cout << " ";
+                }
+            } else {
+                std::cout << " ";
             }
-            return false;
+            if (x == GAME_WIDTH - 1) {
+                std::cout << std::endl;
+            }
         }
+    }
+    std::cout << std::endl;
+    std::cout << std::endl;
 
-	void Game::display(){
+    std::cout << "nextBarX : " << nextBarX << std::endl;
+    std::cout << "speed : " << speed << std::endl;
+    std::cout << "ySpacing : " << ySpacing << std::endl;
+    std::cout << "currentY : " << currentY << std::endl;
+    auto it = centerY.begin();
 
-		for(int y = 0; y < GAME_HEIGHT ; ++y){
+    for (int j = 0; it != centerY.end(); ++it, j++) {
+        std::cout << "centerY n" << j << " : " << *it << std::endl;
 
-			for(int x = 0; x < GAME_WIDTH; ++x){
-				if(x ==0 && y == int(currentY)){
-					std::cout<<"O";
-					x++;
-				}
+    }
+    std::cout << "passedBars : " << passedBars << std::endl;
 
-				if(x%BAR_SPACING == nextBarX){
-					if(y < getNcenter(x/BAR_SPACING) - yspaceing || y > getNcenter(x/BAR_SPACING) + yspaceing ){
-						std::cout<<"X";
-					}
-					else{
-						std::cout<<" ";
-					}
-				}
+}
 
-				else{
-					std::cout<<" ";
-				}
-				if(x == GAME_WIDTH-1){
-					std::cout<<std::endl;
-				}
-			}
-		}
-std::cout<<std::endl;std::cout<<std::endl;
+std::vector <double> Game::getData() {
+    auto it = centerY.begin();
 
-	    std::cout << "nextBarX : " << nextBarX<< std::endl;
-	    std::cout << "speed : " << speed<< std::endl;
-	    std::cout << "yspaceing : " << yspaceing<< std::endl;
-	    std::cout << "currentY : " << currentY<< std::endl;
-	    std::list<double>::iterator it = centerY.begin();
+    std::vector <double> input = {currentY, speed, double(nextBarX), centerY.front(), *(it++)};
+    // Y courant
+    // speed courante
+    // nextBarX
+    // nextYcenter
+    // nextNextYcenter
+    return input;
+}
 
-	    for(int j = 0 ;it != centerY.end();++it, j++){
-	    	std::cout << "centerY n" << j <<" : "<<*it<< std::endl;
+double Game::getNcenter(int n) {
+    auto it = centerY.begin();
+    for (int j = 0; j < n; ++it, j++) {
 
-	    }
-	    std::cout << "passedBars : " << passedBars<< std::endl;
+    }
+    return *it;
+}
 
-	}
+int Game::getScore() {
+    return passedBars;
+}
 
-	std::vector<double> Game::getData() {
-		std::list<double>::iterator it = centerY.begin();
-    		
-		std::vector<double> input = {currentY, speed, double(nextBarX), centerY.front(), *(it++)};
-            // Y courant
-            // speed courante
-            // nextBarX
-            // nextYcenter
-            // nextNextYcenter
-            return input;
-        }
-
-        double Game::getNcenter(int n){
-        		    std::list<double>::iterator it = centerY.begin();
-
-        		    for(int j = 0 ;j<n;++it, j++){}
-
-        		    	return *it;
-        }
-
-        int Game::getScore(){
-        	return passedBars;
-        }
-
-        void Game::reset(){
-        	*this =  Game();
-        }
