@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "Neural.h"
 #include "Simul.h"
+#include "IA.h"
 // a = .32
 // h = 124/(n+2) (h_m = 63)
 
@@ -52,8 +53,8 @@ int main() {
     int score = s.play();
     std::cout << "Score gotten = " << score << std::endl;
 
-//    std::cout << "Start testing the IA" << std::endl;
-//    IA ia = IA(10, {6, 3, 1});
-//    ia.evolve(7);
+    std::cout << "Start testing the IA" << std::endl;
+    IA ia = IA(10, {6, 3, 1});
+    ia.evolve(7);
     return 0;
 }

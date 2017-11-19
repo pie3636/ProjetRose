@@ -15,7 +15,7 @@ Game::Game(const Game &other) {
 
 Game& Game::operator=(Game rhs) {
     std::cout << "[Game] Assignment operator" << std::endl;
-    std::swap(*this, rhs);
+    swap(*this, rhs);
     return *this;
 }
 
@@ -99,9 +99,7 @@ std::vector <double> Game::getData() {
 
 double Game::getNcenter(int n) {
     auto it = centerY.begin();
-    for (int j = 0; j < n; ++it, j++) {
-
-    }
+    std::advance(it, n);
     return *it;
 }
 
