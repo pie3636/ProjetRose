@@ -26,12 +26,17 @@ IA::IA() {
 }
 
 
-
 void IA::sortIA() {
+	for each (Simul var in sim_)
+	{
+		var.play();
+
+	}
 	std::sort(sim_.begin(), sim_.end());
 }
 
 void IA::select() {
+	sortIA();
 	std::shuffle(sim_.begin() + selection_top_, sim_.end(), std::mt19937(std::random_device()()));
 	sim_.resize(selection_lucky_ + selection_top_);
 }
@@ -53,11 +58,11 @@ void IA::mutate() {
 void IA::getNewGen() {
 	//std::cout << "Start sorting = " << std::endl;
 
-	sortIA();
+	//sortIA();
 	/****** DEBUT DEBUG ******/
-	sortIA();
-	int best_score_gotten = (*sim_.begin()).play();
-	std::cout << "Best score after sorting = " << best_score_gotten << std::endl;
+	//sortIA();
+	//int best_score_gotten = (*sim_.begin()).play();
+	//std::cout << "Best score after sorting = " << best_score_gotten << std::endl;
 	//std::cout << "Start selecting = " << std::endl;
 	/****** FIN DEBUG ******/
 	select();
@@ -65,16 +70,16 @@ void IA::getNewGen() {
 
 	mutate();
 	/****** DEBUT DEBUG ******/
-	sortIA();
-	best_score_gotten = (*sim_.begin()).play();
-	std::cout << "Best score after mutating = " << best_score_gotten << std::endl;
+	//sortIA();
+	//best_score_gotten = (*sim_.begin()).play();
+	//std::cout << "Best score after mutating = " << best_score_gotten << std::endl;
 	//std::cout << "Start breeding = " << std::endl;
 	/****** FIN DEBUG ******/
 	breed();
 	/****** DEBUT DEBUG ******/
-	sortIA();
-	best_score_gotten = (*sim_.begin()).play();
-	std::cout << "Best score after breeding = " << best_score_gotten << std::endl;
+	//sortIA();
+	//best_score_gotten = (*sim_.begin()).play();
+	//std::cout << "Best score after breeding = " << best_score_gotten << std::endl;
 	/****** FIN DEBUG ******/
 }
 

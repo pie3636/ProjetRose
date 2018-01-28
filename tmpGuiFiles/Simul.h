@@ -12,8 +12,8 @@ private:
 	explicit Simul(const std::vector <int> &vect_scheme);
 
 public:	
-	bool operator<( Simul& v) ;
-
+	bool operator<( const Simul& v) const;
+	int getScore() const;
 	/**
 	*Simulation d'une partie
 	*@return score de la partie simulée

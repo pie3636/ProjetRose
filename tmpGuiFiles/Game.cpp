@@ -142,7 +142,7 @@ double Game::getNcenter(int n) {
 	return *it;
 }
 
-int Game::getScore() {
+int Game::getScore() const{
 	//std::cout << "PASSED BARS : " << passedBars<<std::endl;
 	return passedBars;// *20 + 20 - nextBarX;
 }

@@ -44,7 +44,7 @@ public:
 
 	// @return The input data for the neural network
 	std::vector<double> getData();
-	int getScore();
+	int getScore() const;
 	~Game();
 	Game& operator=(Game rhs);
 

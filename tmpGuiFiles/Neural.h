@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#define MUT_PROB 0.03
+#define MUT_PROB 0.1
 #define RANGE_MAX  30.0
 #define BREEDING_PROB  0.15
 

@@ -5,7 +5,7 @@
 
 int Simul::play(){
 	bool stillPlaying = true;
-	g = Game();
+	g.reset();
 
 	while (stillPlaying){
 		//g.display();
@@ -18,14 +18,17 @@ int Simul::play(){
 	return g.getScore();
 }
 
-bool Simul::operator<( Simul& v) 
-{
-	if (play() > v.play()){
-		return true;
-	}
-	else{
-	return false;}
+
+int Simul::getScore() const{
+
+	return g.getScore();
 }
+
+
+bool Simul::operator<(const Simul & s) const{
+	return getScore() > s.getScore();
+}
+
 
 int Simul::getAverageScore(int num) {
 	int total = 0;
