@@ -58,10 +58,13 @@ void Game::nextBar() {
 	else{
 		 newH = 25.0;
 	}*/
-	double newH = 30.0;// +(rand() % 10) - 5; //; rand() % (63 - int(ySpacing)) + int(ySpacing);
+	double newH = pos[passedBars];// 30.0;// +(rand() % 10) - 5; //; rand() % (63 - int(ySpacing)) + int(ySpacing);
 
 	centerY[centerY.size() - 1] = (newH);
 }
+
+static double pos2[200] = {};
+double* Game::pos = pos2;
 
 int Game::givepassedBars(){
 	return passedBars;

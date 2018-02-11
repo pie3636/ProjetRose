@@ -12,10 +12,10 @@
 #define GAME_WIDTH 110
 //largeur de la fente
 #define Y_SPA 10.
-//frequence d apparition d'un nouvelle barre
-#define FREQ 10
+//frequence de diminution de fente 
+#define FREQ 5
 //ratio de diminution de la fente
-#define DECR_POWER 1.0
+#define DECR_POWER 0.94
 
 class Game {
 private:
@@ -42,6 +42,7 @@ public:
 
 	void reset();
 
+	static double *pos;
 	// @return The input data for the neural network
 	std::vector<double> getData();
 	int getScore() const;
