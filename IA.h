@@ -14,17 +14,19 @@ private:
 	int selection_top_ = SEL_TOP;
 	int selection_lucky_ = NUM_TAK;
 
-	std::vector<Simul> sim_;
+	std::vector<Simul*> sim_;
 	void sortIA();
 	void select();
 	void breed();
 	void mutate();
+
 public:
 	void getNewGen();
 	void evolve(int n);
 	IA(int population_size, const std::vector <int> &nn_schema);
 	IA();
-	~IA();
+	~IA();	
+
 };
 
 #endif //IA_H

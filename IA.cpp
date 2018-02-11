@@ -10,29 +10,34 @@ IA::~IA(){
 
 IA::IA(int pop_size, const std::vector<int> &nn_schema){
 	population_size_ = pop_size;
-	sim_ = std::vector<Simul>(pop_size);
+	sim_ = std::vector<Simul*>(pop_size);
 	for (int i = 0; i < pop_size; ++i) {
 		Neural n = Neural(nn_schema);
-		Simul s = Simul(n);
-		sim_[i] = s;
+		sim_[i] = new Simul(n);
 	}
 }
 IA::IA() {
 	population_size_ = 0;
-	sim_ = std::vector<Simul>(population_size_);
+	sim_ = std::vector<Simul*>(population_size_);
 	for (int i = 0; i < population_size_; ++i) {
-		sim_[i] = Simul(Neural());
+		sim_[i] = new Simul(Neural());
 	}
 }
 
 
+bool ScoreSort(const Simul *one, const Simul* two)
+{
+	return one->getScore() > (two->getScore());
+}
+
 void IA::sortIA() {
+
 	for (int i = 0; i < sim_.size(); i++)
 	{
-		sim_[i].play();
+		sim_[i]->play();
 
 	}
-	std::sort(sim_.begin(), sim_.end());
+	std::sort(sim_.begin(), sim_.end(), ScoreSort);
 }
 
 void IA::select() {
@@ -43,15 +48,15 @@ void IA::select() {
 
 void IA::breed() {
 	for (int i = 0; i < population_size_ - (selection_lucky_ + selection_top_); i++) {
-		Simul first = sim_[rand() % (selection_lucky_ + selection_top_)];
-		Simul second = sim_[rand() % (selection_lucky_ + selection_top_)];
-		sim_.emplace_back(first.breed(second));
+		Simul* first = sim_[rand() % (selection_lucky_ + selection_top_)];
+		Simul* second = sim_[rand() % (selection_lucky_ + selection_top_)];
+		sim_.emplace_back(new Simul(first->breed(*second)));
 	}
 }
 
 void IA::mutate() {
 	for (auto s : sim_) {
-		s.mutate();
+		s->mutate();
 	}
 }
 
@@ -92,16 +97,16 @@ void IA::evolve(int n) {
 		//std::cout << "Best score of this generation: " << best_score_gotten << std::endl;
 		getNewGen();
 		sortIA();
-		best_score_gotten = (*sim_.begin()).play();
-		(*sim_.begin()).printNN();
+		best_score_gotten = (*sim_.begin())->play();
+		(*sim_.begin())->printNN();
 		std::cout << "Best score after evolving = " << best_score_gotten << std::endl;
 		//(*sim_.begin()).printscore();
 	}
 	std::cout << "Finish evolving = " << std::endl;
 
 	sortIA();
-	best_score_gotten = (*sim_.begin()).play();
-	(*sim_.begin()).printNN();
+	best_score_gotten = (*sim_.begin())->play();
+	(*sim_.begin())->printNN();
 	std::cout << "Best score after evolving = " << best_score_gotten << std::endl;
 }
 
